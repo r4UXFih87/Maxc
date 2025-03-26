@@ -1,0 +1,1 @@
+worker: python trader_au.py
