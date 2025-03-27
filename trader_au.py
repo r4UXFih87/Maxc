@@ -81,7 +81,7 @@ def executar_trading():
 # Iniciar o servidor Flask em uma thread separada
 def start_web_server():
     port = int(os.environ.get("PORT", 10000))  # Render define a variável PORT automaticamente
-    app.run(host='0.0.0.0', port=port)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
 
 # Executar o bot e o servidor web
 if __name__ == "__main__":
