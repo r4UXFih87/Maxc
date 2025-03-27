@@ -1,1 +1,1 @@
-worker: python trader_au.py
+web: gunicorn trader_au:app --bind 0.0.0.0:$PORT --workers 2
