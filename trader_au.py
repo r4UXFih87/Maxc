@@ -121,7 +121,7 @@ def rodar_trading_em_thread():
 
 # Função para iniciar o servidor Flask
 def iniciar_servidor():
-    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000})
+    flask_thread = threading.Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 10000})
     flask_thread.daemon = True
     flask_thread.start()
 
