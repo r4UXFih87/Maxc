@@ -21,9 +21,6 @@ conta1 = conta.get_account_info()     #FUNÇÃO DA CONTA PARA OBTER INFORMAÇÕE
 conta2 = conta1['balances']           #SO PARA OBTER O SALDO
 conect = _Market(api)
 
-
-print(a)
-
 # Função para consultar o saldo
 def Saldo(ativo):
     # Filtrando o ativo específico de forma segura
@@ -78,6 +75,7 @@ def executar_trading():
              order_type = OrderType.MARKET ,
              quote_order_quantity = saldo_usdc
              )
+             print(ordem)
         else:
             print("ordem não aplicada para comprar")
     else:
@@ -90,8 +88,9 @@ def executar_trading():
              symbol = "PEPEUSDC" ,
              side = Side.SELL ,
              order_type = OrderType.MARKET ,
-             quantity = saldo_pepe 
+             quantity = saldo_pepe
              )
+             print(ordem)
         else:
             print("ordem não aplicada para venda")
     else:
