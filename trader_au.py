@@ -10,14 +10,6 @@ from flask import Flask
 import threading
 import os
 
-# Inicializa Flask
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    executar_trading()
-    return executar_trading()
-
 # Configuração da API Mexc
 api_key = 'mx0vglkJnEzqyCHOA9'
 api_secret = 'd46f4b330a67478793d174d0931e576c'
@@ -94,11 +86,6 @@ def executar_trading():
         except Exception as e:
             print(f"Erro no bot: {e}")
             time.sleep(60)  # Espera antes de tentar novamente em caso de erro
-
-# Iniciar o servidor Flask
-def start_web_server():
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host='0.0.0.0', port=port)
 
 # Rodar o bot e o servidor Flask em threads separadas
 if __name__ == "__main__":
