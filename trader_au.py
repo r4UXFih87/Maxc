@@ -102,5 +102,4 @@ def start_web_server():
 
 # Rodar o bot e o servidor Flask em threads separadas
 if __name__ == "__main__":
-    executar_trading()
     start_web_server()
