@@ -1,3 +1,4 @@
+
 import mexc_api as mx
 from mexc_api.common.api import Api
 from mexc_api.common.enums import Method, OrderType, Side
@@ -48,6 +49,7 @@ def executar_trading():
             saldo_usdc = Saldo("USDC")
             saldo_pepe = Saldo("PEPE")
             dados_candles = obter_dados()
+            print(saldo_pepe,saldo_usdc)
 
             medias = Media()
             valor_moeda = medias.Fechamentos(1, dados_candles)
@@ -61,10 +63,10 @@ def executar_trading():
             if saldo_usdc >= 1 and media_rapida > media_devagar:
                 print("COMPRA")
                 conta.new_order(
-                    symbol="PEPEUSDC",
-                    side=Side.BUY,
-                    order_type=OrderType.MARKET,
-                    quote_order_quantity=saldo_usdc
+                    symbol = "PEPEUSDC",
+                    side = Side.BUY,
+                    order_type = OrderType.MARKET,
+                    quote_order_quantity = str(saldo_usdc)
                 )
             else:
                 print("Ordem não aplicada para compra")
@@ -72,10 +74,10 @@ def executar_trading():
             if saldo_pepe >= pepe and media_rapida < media_devagar:
                 print("VENDA")
                 conta.new_order(
-                    symbol="PEPEUSDC",
-                    side=Side.SELL,
-                    order_type=OrderType.MARKET,
-                    quantity=saldo_pepe
+                    symbol = "PEPEUSDC",
+                    side = Side.SELL,
+                    order_type = OrderType.MARKET,
+                    quantity = str(saldo_pepe)
                 )
             else:
                 print("Ordem não aplicada para venda")
