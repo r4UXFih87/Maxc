@@ -93,7 +93,7 @@ def executar_trading():
 
         except Exception as e:
             print(f"Erro no bot: {e}")
-            time.sleep(10)  # Espera antes de tentar novamente em caso de erro
+            time.sleep(60)  # Espera antes de tentar novamente em caso de erro
 
 # Iniciar o servidor Flask
 def start_web_server():
