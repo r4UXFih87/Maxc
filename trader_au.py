@@ -86,7 +86,7 @@ def executar_trading():
              )
         else:
             print("Ordem não aplicada para venda")
-
+  return executar_trading
         time.sleep(60)  # Aguarda 1 minuto para a próxima iteração
 
 # Iniciar o servidor Flask em uma thread separada
