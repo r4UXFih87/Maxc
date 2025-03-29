@@ -87,3 +87,14 @@ def executar_trading():
             print(f"Erro no bot: {e}")
             time.sleep(60)  # Espera antes de tentar novamente em caso de erro
 
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    executar_trading()
+    return executar_trading
+
+if __name__ == "__main__":
+    threading.Thread(target=executar_trading, daemon=True).start()
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
+    executar_trading()
