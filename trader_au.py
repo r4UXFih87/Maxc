@@ -1,4 +1,3 @@
-
 import mexc_api as mx
 from mexc_api.common.api import Api
 from mexc_api.common.enums import Method, OrderType, Side
@@ -10,9 +9,6 @@ from datetime import datetime, timedelta
 from flask import Flask
 import threading
 import os
-
-# Inicializa Flask
-app = Flask(__name__)
 
 # Configuração da API Mexc
 api_key = 'mx0vglkJnEzqyCHOA9'
@@ -46,11 +42,12 @@ class Media:
         return round(sum(valores) / len(valores), 9)
 
 # Função principal do trading
+def executar_trading():
     while True:
         saldo_usdc = Saldo("USDC")
         saldo_pepe = Saldo("PEPE")
         dados_candles = obter_dados()
-        
+
         medias = Media()
         valor_moeda = medias.Fechamentos(1, dados_candles)
         media_rapida = medias.Fechamentos(21, dados_candles)
@@ -81,20 +78,5 @@ class Media:
              )
         else:
             print("Ordem não aplicada para venda")
-  
-        time.sleep(60)  # Aguarda 1 minuto para a próxima iteração
 
-@app.route('/')
-def home():
-    
-    return "Bot de trading rodando!"
-
-# Iniciar o servidor Flask em uma thread separada
-def start_web_server():
-    port = int(os.environ.get("PORT", 10000))  # Render define a variável PORT automaticamente
-    app.run(host='0.0.0.0', port = port)
-
-# Executar o bot e o servidor web
-if __name__ == "__main__":
-    threading.Thread(target=start_web_server, daemon=True).start()
-    
+        time.sleep(300)  # Aguarda 1 minuto para a próxima iteração
