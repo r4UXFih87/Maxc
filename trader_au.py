@@ -87,6 +87,3 @@ def executar_trading():
             print(f"Erro no bot: {e}")
             time.sleep(60)  # Espera antes de tentar novamente em caso de erro
 
-# Rodar o bot e o servidor Flask em threads separadas
-if __name__ == "__main__":
-    start_web_server()
