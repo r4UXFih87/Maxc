@@ -87,7 +87,7 @@ class Media:
 @app.route('/')
 def home():
     
-    return f"{executar_trading} Bot de trading rodando!"
+    return "Bot de trading rodando!"
 
 # Iniciar o servidor Flask em uma thread separada
 def start_web_server():
