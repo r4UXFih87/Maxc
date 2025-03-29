@@ -49,7 +49,7 @@ def executar_trading():
             saldo_usdc = Saldo("USDC")
             saldo_pepe = Saldo("PEPE")
             dados_candles = obter_dados()
-            print(saldo_pepe,saldo_usd)
+            print(saldo_pepe,saldo_usdc)
 
             medias = Media()
             valor_moeda = medias.Fechamentos(1, dados_candles)
