@@ -46,7 +46,6 @@ class Media:
         return round(sum(valores) / len(valores), 9)
 
 # Função principal do trading
-def executar_trading():
     while True:
         saldo_usdc = Saldo("USDC")
         saldo_pepe = Saldo("PEPE")
@@ -98,4 +97,4 @@ def start_web_server():
 # Executar o bot e o servidor web
 if __name__ == "__main__":
     threading.Thread(target=start_web_server, daemon=True).start()
-    executar_trading()
+    
