@@ -14,10 +14,6 @@ import os
 # Inicializa Flask
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Bot de trading rodando!"
-
 # Configuração da API Mexc
 api_key = 'mx0vglkJnEzqyCHOA9'
 api_secret = 'd46f4b330a67478793d174d0931e576c'
@@ -86,8 +82,13 @@ def executar_trading():
              )
         else:
             print("Ordem não aplicada para venda")
-  return executar_trading
+  
         time.sleep(60)  # Aguarda 1 minuto para a próxima iteração
+
+@app.route('/')
+def home():
+    
+    return f"{executar_trading} Bot de trading rodando!"
 
 # Iniciar o servidor Flask em uma thread separada
 def start_web_server():
