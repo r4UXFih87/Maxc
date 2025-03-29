@@ -15,7 +15,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Bot de trading rodando!"
+    executar_trading()
+    return executar_trading()
 
 # Configuração da API Mexc
 api_key = 'mx0vglkJnEzqyCHOA9'
