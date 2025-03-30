@@ -68,7 +68,7 @@ def executar_trading():
             print(f"Período 45: {media_devagar:.8f}")
 
 
-            if saldo_usdc >= 1 and media_rapida > media_devagar:
+            if saldo_usdc >= 100 and media_rapida > media_devagar:
                 print("COMPRA")
                 conta.new_order(
                     symbol = "PEPEUSDC",
@@ -79,7 +79,7 @@ def executar_trading():
             else:
                 print("Ordem não aplicada para compra")
 
-            if saldo_pepe >= pepe and media_rapida < media_devagar:
+            if saldo_pepe >= pepe and media_rapida > media_devagar:
                 print("VENDA")
                 conta.new_order(
                     symbol = "PEPEUSDC",
