@@ -1,4 +1,4 @@
-
+⁸
 
 import mexc_api as mx
 from mexc_api.common.api import Api
@@ -85,7 +85,7 @@ def executar_trading():
                     symbol = "PEPEUSDC",
                     side = Side.SELL,
                     order_type = OrderType.MARKET,
-                    quote_order_quantity = saldo_pepe
+                     = saldo_pepe
                 )
             else:
                 print("Ordem não aplicada para venda")
