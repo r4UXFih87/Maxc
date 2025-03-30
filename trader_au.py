@@ -1,4 +1,4 @@
-
+i
 
 import mexc_api as mx
 from mexc_api.common.api import Api
@@ -103,8 +103,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    
-    return "bot rodando"
+    executar_trading()
+    return executar_trading()
 
 if __name__ == "__main__":
     threading.Thread(target=executar_trading, daemon=True).start()
