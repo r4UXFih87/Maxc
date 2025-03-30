@@ -104,7 +104,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     executar_trading()
-    return executar_trading()
+    return str(executar_trading())
 
 if __name__ == "__main__":
     
