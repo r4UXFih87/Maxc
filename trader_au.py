@@ -1,4 +1,4 @@
-⁸
+
 
 import mexc_api as mx
 from mexc_api.common.api import Api
