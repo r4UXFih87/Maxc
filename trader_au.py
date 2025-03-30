@@ -1,4 +1,5 @@
 
+
 import mexc_api as mx
 from mexc_api.common.api import Api
 from mexc_api.common.enums import Method, OrderType, Side
@@ -46,10 +47,16 @@ class Media:
 def executar_trading():
     while True:
         try:
+            api = Api(api_key, api_secret)
+            conta = _Account(api)
+            conect = _Market(api)
+
             saldo_usdc = Saldo("USDC")
             saldo_pepe = Saldo("PEPE")
             dados_candles = obter_dados()
-            print(saldo_pepe,saldo_usdc)
+
+            texto_usdc = str(saldo_usdc)
+            texto_pepe = str(saldo_pepe)
 
             medias = Media()
             valor_moeda = medias.Fechamentos(1, dados_candles)
@@ -60,13 +67,14 @@ def executar_trading():
             print(f"Período 21: {media_rapida:.8f}")
             print(f"Período 45: {media_devagar:.8f}")
 
+
             if saldo_usdc >= 1 and media_rapida > media_devagar:
                 print("COMPRA")
                 conta.new_order(
                     symbol = "PEPEUSDC",
                     side = Side.BUY,
                     order_type = OrderType.MARKET,
-                    quote_order_quantity = f"{saldo_usdc}"
+                    quote_order_quantity = texto_usdc
                 )
             else:
                 print("Ordem não aplicada para compra")
@@ -77,12 +85,12 @@ def executar_trading():
                     symbol = "PEPEUSDC",
                     side = Side.SELL,
                     order_type = OrderType.MARKET,
-                    quantity = f"{saldo_pepe}"
+                    quantity = saldo_pepe
                 )
             else:
                 print("Ordem não aplicada para venda")
 
-            print(saldo_usdc, saldo_pepe, pepe)
+
             time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
 
         except Exception as e:
