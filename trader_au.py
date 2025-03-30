@@ -107,6 +107,6 @@ def home():
     return executar_trading()
 
 if __name__ == "__main__":
-    threading.Thread(target=executar_trading, daemon=True).start()
+    
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
     
