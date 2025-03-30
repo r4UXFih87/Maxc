@@ -104,7 +104,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     
-    return executar_trading
+    return "bot rodando"
 
 if __name__ == "__main__":
     threading.Thread(target=executar_trading, daemon=True).start()
