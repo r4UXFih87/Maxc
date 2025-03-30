@@ -93,7 +93,7 @@ def executar_trading():
                 print("Ordem não aplicada para venda")
 
 
-        time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
+            time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
 
         except Exception as e:
             print(f"Erro no bot: {e}")
