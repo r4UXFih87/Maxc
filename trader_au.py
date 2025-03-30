@@ -93,7 +93,7 @@ def executar_trading():
                 print("Ordem não aplicada para venda")
 
 
-            time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
+        time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
 
         except Exception as e:
             print(f"Erro no bot: {e}")
@@ -108,5 +108,6 @@ def home():
 
 if __name__ == "__main__":
     
+    threading.Thread(target=executar_trading, daemon=True).start()
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
     
