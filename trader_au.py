@@ -63,6 +63,8 @@ def executar_trading():
             media_rapida = medias.Fechamentos(21, dados_candles)
             media_devagar = medias.Fechamentos(45, dados_candles)
             pepe = round(1 / valor_moeda)
+            receber = saldo_pepe * valor_moeda
+            receber_texto = str(receber)
 
             print(f"Período 21: {media_rapida:.8f}")
             print(f"Período 45: {media_devagar:.8f}")
@@ -85,7 +87,7 @@ def executar_trading():
                     symbol = "PEPEUSDC",
                     side = Side.SELL,
                     order_type = OrderType.MARKET,
-                     = saldo_pepe
+                    quote_order_quantity = receber_texto
                 )
             else:
                 print("Ordem não aplicada para venda")
