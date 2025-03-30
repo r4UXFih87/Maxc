@@ -85,7 +85,7 @@ def executar_trading():
                     symbol = "PEPEUSDC",
                     side = Side.SELL,
                     order_type = OrderType.MARKET,
-                    quantity = saldo_pepe
+                    quote_order_quantity = saldo_pepe
                 )
             else:
                 print("Ordem não aplicada para venda")
