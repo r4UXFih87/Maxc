@@ -96,8 +96,8 @@ app = Flask(__name__)
 @app.route("/")
 def home():
 
-    oi = threading.Thread(target=executar_trading, daemon=True).start()
-    return oi
+    threading.Thread(target=executar_trading, daemon=True).start()
+    return "RODANDO"
 
 # Iniciar o bot em uma thread separada
 
