@@ -95,10 +95,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return f"<h1>Trading bot está rodando!</h1><p>{bot_status}</p>"
+     
+    executar_trading()
+    return f"<h1>Trading bot está rodando!</h1>"
 
 # Iniciar o bot em uma thread separada
-threading.Thread(target=executar_trading, daemon=True).start()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
