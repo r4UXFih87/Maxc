@@ -1,5 +1,3 @@
-
-
 import mexc_api as mx
 from mexc_api.common.api import Api
 from mexc_api.common.enums import Method, OrderType, Side
@@ -7,7 +5,6 @@ from mexc_api.spot.endpoints._account import _Account
 from mexc_api.spot.endpoints._market import _Market
 import requests
 import time
-from datetime import datetime, timedelta
 from flask import Flask
 import threading
 import os
@@ -23,6 +20,9 @@ intervalo_candles = "50"
 api = Api(api_key, api_secret)
 conta = _Account(api)
 conect = _Market(api)
+
+# Variável global para armazenar o status do bot
+bot_status = "Bot ainda não iniciou."
 
 # Função para consultar o saldo
 def Saldo(ativo):
@@ -45,18 +45,13 @@ class Media:
 
 # Função principal do trading
 def executar_trading():
+    global bot_status
+    bot_status = "Bot está rodando..."
     while True:
         try:
-            api = Api(api_key, api_secret)
-            conta = _Account(api)
-            conect = _Market(api)
-
             saldo_usdc = Saldo("USDC")
             saldo_pepe = Saldo("PEPE")
             dados_candles = obter_dados()
-
-            texto_usdc = str(saldo_usdc)
-            texto_pepe = str(saldo_pepe)
 
             medias = Media()
             valor_moeda = medias.Fechamentos(1, dados_candles)
@@ -64,50 +59,46 @@ def executar_trading():
             media_devagar = medias.Fechamentos(45, dados_candles)
             pepe = round(1 / valor_moeda)
             receber = saldo_pepe * valor_moeda
-            receber_texto = str(receber)
 
-            print(f"Período 21: {media_rapida:.8f}")
-            print(f"Período 45: {media_devagar:.8f}")
-
+            bot_status = f"Última análise: Média 21={media_rapida:.8f}, Média 45={media_devagar:.8f}"
 
             if saldo_usdc >= 1 and media_rapida > media_devagar:
-                print("COMPRA")
+                bot_status += " | COMPRA realizada!"
                 conta.new_order(
-                    symbol = "PEPEUSDC",
-                    side = Side.BUY,
-                    order_type = OrderType.MARKET,
-                    quote_order_quantity = texto_usdc
+                    symbol="PEPEUSDC",
+                    side=Side.BUY,
+                    order_type=OrderType.MARKET,
+                    quote_order_quantity=str(saldo_usdc)
                 )
             else:
-                print("Ordem não aplicada para compra")
+                bot_status += " | Nenhuma compra feita."
 
             if saldo_pepe >= pepe and media_rapida < media_devagar:
-                print("VENDA")
+                bot_status += " | VENDA realizada!"
                 conta.new_order(
-                    symbol = "PEPEUSDC",
-                    side = Side.SELL,
-                    order_type = OrderType.MARKET,
-                    quote_order_quantity = receber_texto
+                    symbol="PEPEUSDC",
+                    side=Side.SELL,
+                    order_type=OrderType.MARKET,
+                    quote_order_quantity=str(receber)
                 )
             else:
-                print("Ordem não aplicada para venda")
+                bot_status += " | Nenhuma venda feita."
 
-
-            time.sleep(60)  # Aguarda 30 segundos antes da próxima iteração
+            time.sleep(60)
 
         except Exception as e:
-            print(f"Erro no bot: {e}")
-            time.sleep(60)  # Espera antes de tentar novamente em caso de erro
+            bot_status = f"Erro no bot: {e}"
+            time.sleep(60)
 
+# Criar e iniciar o Flask
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    
-    return str(executar_trading())
+    return f"<h1>Trading bot está rodando!</h1><p>{bot_status}</p>"
+
+# Iniciar o bot em uma thread separada
+threading.Thread(target=executar_trading, daemon=True).start()
 
 if __name__ == "__main__":
-    
-    
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
-    
