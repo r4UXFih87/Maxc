@@ -8,6 +8,11 @@ import time
 from flask import Flask
 import threading
 import os
+import logging
+
+# Configuração do logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Configuração da API Mexc
 api_key = 'mx0vglkJnEzqyCHOA9'
@@ -47,6 +52,8 @@ class Media:
 def executar_trading():
     global bot_status
     bot_status = "Bot está rodando..."
+    logger.info("Iniciando a execução do bot de trading...")  # Log para indicar que o bot foi iniciado
+
     while True:
         try:
             saldo_usdc = Saldo("USDC")
@@ -61,6 +68,7 @@ def executar_trading():
             receber = saldo_pepe * valor_moeda
 
             bot_status = f"Última análise: Média 21={media_rapida:.8f}, Média 45={media_devagar:.8f}"
+            logger.info(bot_status)  # Log da análise atual
 
             if saldo_usdc >= 1 and media_rapida > media_devagar:
                 bot_status += " | COMPRA realizada!"
@@ -70,8 +78,10 @@ def executar_trading():
                     order_type=OrderType.MARKET,
                     quote_order_quantity=str(saldo_usdc)
                 )
+                logger.info("Compra realizada com sucesso!")  # Log da compra realizada
             else:
                 bot_status += " | Nenhuma compra feita."
+                logger.info("Nenhuma compra feita.")  # Log para caso não haja compra
 
             if saldo_pepe >= pepe and media_rapida < media_devagar:
                 bot_status += " | VENDA realizada!"
@@ -81,13 +91,16 @@ def executar_trading():
                     order_type=OrderType.MARKET,
                     quote_order_quantity=str(receber)
                 )
+                logger.info("Venda realizada com sucesso!")  # Log da venda realizada
             else:
                 bot_status += " | Nenhuma venda feita."
+                logger.info("Nenhuma venda feita.")  # Log para caso não haja venda
 
             time.sleep(60)
 
         except Exception as e:
             bot_status = f"Erro no bot: {e}"
+            logger.error(f"Erro no bot: {e}")  # Log do erro
             time.sleep(60)
 
 # Criar e iniciar o Flask
@@ -95,12 +108,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-
-    threading.Thread(target=executar_trading, daemon=True).start()
-    return "RODANDO"
+    return f"<h1>Trading bot está rodando!</h1><p>{bot_status}</p>"
 
 # Iniciar o bot em uma thread separada
+threading.Thread(target=executar_trading, daemon=True).start()
 
 if __name__ == "__main__":
-
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 10000)))
